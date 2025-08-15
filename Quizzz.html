@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personal Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: vertical;
+    }
+    button {
+      margin-top: 15px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <form id="quizForm" action="https://formspree.io/f/xvgqynla" method="POST">
+      <div id="questionContainer"></div>
+      <button type="button" id="nextBtn">Next</button>
+    </form>
+  </div>
+
+  <script>
+    const questions = [
+      "What’s a memory from your childhood you’ve never told anyone?",
+      "Who was the first person to make you feel truly understood?",
+      "Was there ever a time you felt completely left out?",
+      "When was the last time you cried, and what caused it?",
+      "What’s something you wish people knew about you without you having to say it?",
+      "What’s a small thing that can ruin your whole day?",
+      "Is there a fear you have that you’ve never told me about?",
+      "What made you first trust me?",
+      "What’s something I do that makes you feel safest with me?",
+      "When do you feel most loved by me?",
+      "If you could be anywhere in 5 years, where would you be?",
+      "What’s one dream you’re scared to chase?",
+      "What’s your comfort food when you’re sad?",
+      "What’s a small gesture that makes your heart melt?",
+      "What’s something you’ve noticed about me that I don’t realize I do?",
+      "What’s a random memory of us that pops into your head at unexpected times?",
+      "What's something I can do or change to become a better person for you?",
+      "Is there something I stopped doing that you would want me to continue doing or is there a trait I had that you would like me to regain?"
+    ];
+
+    let currentQuestion = 0;
+    const container = document.getElementById("questionContainer");
+    const nextBtn = document.getElementById("nextBtn");
+    const form = document.getElementById("quizForm");
+
+    function loadQuestion() {
+      container.innerHTML = `
+        <h2>${questions[currentQuestion]}</h2>
+        <textarea name="q${currentQuestion+1}" rows="4" required></textarea>
+      `;
+      nextBtn.textContent = currentQuestion === questions.length - 1 ? "Submit" : "Next";
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (!form.querySelector("textarea").value.trim()) return; // prevent empty
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+      } else {
+        form.submit();
+      }
+    });
+
+    loadQuestion();
+  </script>
+
+</body>
+</html>
